@@ -1,3 +1,3 @@
 --dataset_name = ['cifar10', 'cub']
 --num_epochs = [50]
---sup_weight = [0.35, 1]
+--sup_weight = [0.35, 1.0]
