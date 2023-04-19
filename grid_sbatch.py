@@ -1,6 +1,6 @@
 import itertools
-from pathlib import Path
 import subprocess
+import datetime
 
 import toml
 
@@ -21,8 +21,11 @@ if __name__ == "__main__":
     sbatch_flags = config_to_sbatch_flags(args.config_path)
     launch_cmd = config_to_launch_cmd(args.config_path)
     flag_strs = search_to_flags(args.search_path)
+
+    now = datetime.datetime.now()
+    time_str = now.strftime("%Y-%m-%d_%H-%M-%S")
     for i, flag_str in enumerate(flag_strs):
         if not args.no_label:
-            flag_str += f" --label {Path(args.search_path).stem}_{i}"
+            flag_str += f" --label {time_str}_{i}"
         cmd = f"sbatch {sbatch_flags} --wrap \"{launch_cmd} {flag_str}\""
         subprocess.run(cmd, shell=True)
